@@ -3,6 +3,9 @@ import {OrbitControls} from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import {PointLightHelper} from "three";
 import {mod} from "three/nodes";
+import tinkoffStar from "../assets/Star_Tinkoff.gltf?url"
+
+
 
 const M = Math
 
@@ -17,7 +20,8 @@ document.body.appendChild(renderer.domElement);
 
 let model;
 const loader = new GLTFLoader();
-loader.load( 'assets/Star_Tinkoff.gltf', function ( gltf ) {
+
+loader.load( tinkoffStar, function ( gltf ) {
     model = gltf.scene;
     // model.position.z = -2;
     // model.position.y = 1;
@@ -53,12 +57,16 @@ const ghelper = new T.GridHelper;
 scene.add(pointLight, rimLight);
 
 
+let objects = [];
+objects.push(model);
+
 function animate() {
     requestAnimationFrame(animate);
-    model.rotation.y = M.sin(clock.getElapsedTime()) / M.PI / 2;
-    model.rotation.z = M.sin(clock.getElapsedTime() * 2) / M.PI / 3;
-    model.rotation.x = M.sin(clock.getElapsedTime() * 2) / M.PI / 3;
-    //
+    if (model != null) {
+        model.rotation.y = M.sin(clock.getElapsedTime()) / M.PI / 2;
+        model.rotation.z = M.sin(clock.getElapsedTime() * 2) / M.PI / 3;
+        model.rotation.x = M.sin(clock.getElapsedTime() * 2) / M.PI / 3;
+    }
     renderer.render(scene, camera);
 }
 
